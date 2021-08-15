@@ -21,6 +21,18 @@ app.get("/display", function (req, res) {
 app.get("/expenseList", function (req, res) {
   res.send(expenseListFake);
 });
+
+
+// delete budgetEntry
+app.delete("/expense/:id", function (req, res) {
+  const { id } = req.params;
+  const expenseIndex = expenseListFake.findIndex((e) => e.id === id);
+
+  expenseListFake.splice(expenseIndex, 1);
+
+  return res.send();
+});
+
 const server = app.listen(3000, function () {
   const host = server.address().address;
   const port = server.address().port;
