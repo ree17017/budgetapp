@@ -6,18 +6,19 @@ const budget = 0;
 const balance = 0;
 const expense = 0;
 
+// Need to move this as a DB.
 var expenseListFake = [
   { id: 123, expense: "item 1", value: 100 },
   { id: 124, expense: "item 2", value: 100 },
 ];
 
 // Home page with init value
+// Need to switch this out to direct to the React router.
 app.get("/", function (req, res) {
   res.send("Hello World");
 });
 
 function totalExpenses() {
-    console.log('yep')
   let total = 0;
   for (const expense in expenseListFake) {
     total += expenseListFake[expense].value;
@@ -26,7 +27,6 @@ function totalExpenses() {
 }
 
 function balanceTotal() {
-    console.log('yep')
   balanceTotal = budget - totalExpenses();
 }
 
@@ -36,13 +36,10 @@ const displayFake = {
     balance: balance,
 };
 
-// Sudo code
-
 // put Budget value
 app.put("/expense/:expense/:value", function (req, res) {
   const { expense, value } = req.params;
   const lastID = expenseListFake.length + 1;
-  console.log(lastID);
   const newExpense = { id: lastID, expense: expense, value: value };
   expenseListFake.push(newExpense);
   res.send(200);
@@ -63,9 +60,7 @@ app.delete("/expense/:id", function (req, res) {
   const { id } = req.params;
   const expenseIndex = expenseListFake.find((expense, i) => {
     let index = -1;
-    console.log(expense);
     if (expense.id === id) {
-      console.log(id);
       index = i;
     }
     return index;
@@ -85,9 +80,7 @@ app.post("/expense/:id/:expense/:value", function (req, res) {
   const { id, expense, value } = req.params;
   const expenseIndex = expenseListFake.find((expense, i) => {
     let index = -1;
-    console.log(expense);
     if (expense.id === id) {
-      console.log(id);
       index = i;
     }
     return index;
@@ -104,5 +97,5 @@ app.post("/expense/:id/:expense/:value", function (req, res) {
 const server = app.listen(3000, function () {
   const host = server.address().address;
   const port = server.address().port;
-  console.log("Example app listening at http://%s:%s", host, port);
+  console.log(`Example app listening at http://${host}:${port}`);
 });
