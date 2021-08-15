@@ -2,7 +2,7 @@ const express = require("express");
 const app = express();
 
 // Fake data
-const expenseListFake = [
+var expenseListFake = [
   { id: 123, expense: "item 1", value: 100 },
   { id: 124, expense: "item 2", value: 100 },
 ];
@@ -26,31 +26,46 @@ app.get("/expenseList", function (req, res) {
   res.send(expenseListFake);
 });
 
-
 // delete budgetEntry
 app.delete("/expense/:id", function (req, res) {
   const { id } = req.params;
-  const expenseIndex = expenseListFake.findIndex((e) => e.id === id);
+  const expenseIndex = expenseListFake.find((expense, i) => {
+    let index = -1;
+    console.log(expense);
+    if (expense.id === id) {
+      console.log(id);
+      index = i;
+    }
+    return index;
+  });
 
-  expenseListFake.splice(expenseIndex, 1);
+  // Fake delete from database.
+  expenseListFake = expenseListFake.splice(expenseIndex, 1);
 
-  return res.send();
+  return res.send({
+    status: 200,
+    expenseList: expenseListFake,
+  });
 });
 
 // update budgetEntry
 app.post("/expense/:id/:expense/:value", function (req, res) {
   const { id, expense, value } = req.params;
-  const expenseIndex = expenseListFake.findIndex((e) => e.id === id);
-  console.log('index', expenseIndex)
+  const expenseIndex = expenseListFake.find((expense, i) => {
+    let index = -1;
+    console.log(expense);
+    if (expense.id === id) {
+      console.log(id);
+      index = i;
+    }
+    return index;
+  });
 
-  const result = {
-    expense: expense,
-    value: value
-  };
+  expenseIndex.expense = expense
+  expenseIndex.value = value
 
-  res.send(result)
+  res.send(expenseListFake);
 });
-
 
 // Home page with init value
 
