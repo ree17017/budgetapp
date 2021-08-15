@@ -33,6 +33,20 @@ app.delete("/expense/:id", function (req, res) {
   return res.send();
 });
 
+// update budgetEntry
+app.post("/expense/:id/:expense/:value", function (req, res) {
+  const { id, expense, value } = req.params;
+  const expenseIndex = expenseListFake.findIndex((e) => e.id === id);
+  console.log('index', expenseIndex)
+
+  const result = {
+    expense: expense,
+    value: value
+  };
+
+  res.send(result)
+});
+
 const server = app.listen(3000, function () {
   const host = server.address().address;
   const port = server.address().port;
