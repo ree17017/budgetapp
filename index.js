@@ -9,6 +9,10 @@ const expenseListFake = [
 
 const displayFake = { budget: 100, expenses: 100, balance: 100 };
 
+app.get("/", function (req, res) {
+  res.send("Hello World");
+});
+
 // Sudo code
 // post Budget value
 // post Expense name and amount
@@ -46,6 +50,11 @@ app.post("/expense/:id/:expense/:value", function (req, res) {
 
   res.send(result)
 });
+
+
+// Home page with init value
+
+// create user
 
 const server = app.listen(3000, function () {
   const host = server.address().address;
