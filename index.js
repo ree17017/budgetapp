@@ -2,20 +2,52 @@ const express = require("express");
 const app = express();
 
 // Fake data
+const budget = 0;
+const balance = 0;
+const expense = 0;
+
 var expenseListFake = [
   { id: 123, expense: "item 1", value: 100 },
   { id: 124, expense: "item 2", value: 100 },
 ];
 
-const displayFake = { budget: 100, expenses: 100, balance: 100 };
-
+// Home page with init value
 app.get("/", function (req, res) {
   res.send("Hello World");
 });
 
+function totalExpenses() {
+    console.log('yep')
+  let total = 0;
+  for (const expense in expenseListFake) {
+    total += expenseListFake[expense].value;
+  }
+  expense = total;
+}
+
+function balanceTotal() {
+    console.log('yep')
+  balanceTotal = budget - totalExpenses();
+}
+
+const displayFake = {
+    budget: budget,
+    expenses: expense,
+    balance: balance,
+};
+
 // Sudo code
-// post Budget value
-// post Expense name and amount
+
+// put Budget value
+app.put("/expense/:expense/:value", function (req, res) {
+  const { expense, value } = req.params;
+  const lastID = expenseListFake.length + 1;
+  console.log(lastID);
+  const newExpense = { id: lastID, expense: expense, value: value };
+  expenseListFake.push(newExpense);
+  res.send(200);
+});
+
 // get display values
 app.get("/display", function (req, res) {
   res.send(displayFake);
@@ -61,15 +93,13 @@ app.post("/expense/:id/:expense/:value", function (req, res) {
     return index;
   });
 
-  expenseIndex.expense = expense
-  expenseIndex.value = value
+  expenseIndex.expense = expense;
+  expenseIndex.value = value;
 
   res.send(expenseListFake);
 });
 
-// Home page with init value
-
-// create user
+// create user how can I keep users private without login? And no have users over use DB?
 
 const server = app.listen(3000, function () {
   const host = server.address().address;
