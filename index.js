@@ -17,6 +17,10 @@ app.get("/display", function (req, res) {
   res.send(displayFake);
 });
 
+// get budgetList
+app.get("/expenseList", function (req, res) {
+  res.send(expenseListFake);
+});
 const server = app.listen(3000, function () {
   const host = server.address().address;
   const port = server.address().port;
