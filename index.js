@@ -1,13 +1,15 @@
 const express = require("express");
 const app = express();
+const expenseRouter = require("./Routes/ExpenseRouter.js");
+const displayRoute = require("./Routes/DisplayRoute.js");
 
 // Fake data
-const budget = 0;
-const balance = 0;
-const expense = 0;
+let budget = 0;
+let balance = 0;
+let expense = 0;
 
 // Need to move this as a DB.
-var expenseListFake = [
+let expenseListFake = [
   { id: 123, expense: "item 1", value: 100 },
   { id: 124, expense: "item 2", value: 100 },
 ];
@@ -20,35 +22,28 @@ app.get("/", function (req, res) {
 
 function totalExpenses() {
   let total = 0;
-  for (const expense in expenseListFake) {
-    total += expenseListFake[expense].value;
+  for (const e in expenseListFake) {
+    total += expenseListFake[e].value;
   }
+
   expense = total;
 }
 
-function balanceTotal() {
-  balanceTotal = budget - totalExpenses();
+function setBalanceTotal() {
+  balance = budget - totalExpenses();
 }
 
 const displayFake = {
-    budget: budget,
-    expenses: expense,
-    balance: balance,
+  budget: budget,
+  expenses: expense,
+  balance: balance,
 };
 
 // put Budget value
-app.put("/expense/:expense/:value", function (req, res) {
-  const { expense, value } = req.params;
-  const lastID = expenseListFake.length + 1;
-  const newExpense = { id: lastID, expense: expense, value: value };
-  expenseListFake.push(newExpense);
-  res.send(200);
-});
+app.use("/expense", expenseRouter);
 
 // get display values
-app.get("/display", function (req, res) {
-  res.send(displayFake);
-});
+app.use("/display", displayRoute);
 
 // get budgetList
 app.get("/expenseList", function (req, res) {
