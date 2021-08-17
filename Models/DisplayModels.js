@@ -6,7 +6,7 @@ var expenseListFake = [
 var budget = 0; // in the DB
 var balance = 0; // in the DB
 
-const display = (callback) => {
+const displayTotal = (callback) => {
   callback(null, {
     expenseListFake: expenseListFake,
     budget: budget,
@@ -14,4 +14,4 @@ const display = (callback) => {
   });
 };
 
-module.exports = {display: display}
+module.exports = { displayTotal: displayTotal };

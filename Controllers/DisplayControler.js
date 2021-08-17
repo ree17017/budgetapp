@@ -1,8 +1,7 @@
 const expenseModels = require("../Models/DisplayModels.js");
 
-const display = (req, res) => {
-  console.log("displayControler");
-  expenseModels.display(function (error, results) {
+const displayTotal = (req, res) => {
+  expenseModels.displayTotal(function (error, results) {
     if (error || results === null) {
       res.sendStatus(500).json({
         success: false,
@@ -16,9 +15,9 @@ const display = (req, res) => {
 
       results = { ...results, expense: total };
 
-      res.status(200).json({ success: true, results });
+      res.send({ success: true, results });
     }
   });
 };
 
-module.exports = { display: display };
+module.exports = { displayTotal: displayTotal };
