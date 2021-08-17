@@ -1,7 +1,7 @@
 const express = require("express");
 const app = express();
 const expenseRouter = require("./Routes/ExpenseRouter.js");
-const displayRoute = require("./Routes/DisplayRoute.js");
+const displayTotalRoute = require("./Routes/DisplayRoute.js");
 
 // Fake data
 let budget = 0;
@@ -43,7 +43,7 @@ const displayFake = {
 app.use("/expense", expenseRouter);
 
 // get display values
-app.use("/display", displayRoute);
+app.use("/displayTotals", displayTotalRoute);
 
 // get budgetList
 app.get("/expenseList", function (req, res) {
